@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atendimento ao Cliente - Cinema</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .chat-container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+            max-width: 600px;
+            margin: auto;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .attendente {
+            background-color: #e7f3fe;
+            text-align: left;
+        }
+        .cliente {
+            background-color: #d4edda;
+            text-align: right;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="number"] {
+            width: 80px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Atendimento ao Cliente - Cinema</h1>
+    <div class="chat-container" id="chat">
+        <div class="message atendente">Olá! Boa tarde! Bem-vindo ao cinema!</div>
+        <div class="message atendente">Temos alguns filmes disponíveis:</div>
+        <div class="message atendente">1. Deadpool (Classificação: 18+ anos)</div>
+        <div class="message atendente">2. Toy Story (Classificação: Livre)</div>
+        <div class="message atendente">3. Os Vingadores (Classificação: 12+ anos)</div>
+        <div class="message atendente">4. A Bela e a Fera (Classificação: Livre)</div>
+    </div>
+
+    <form id="filmeForm">
+        <label for="opcao">Escolha o número do filme:</label>
+        <input type="number" id="opcao" name="opcao" min="1" max="4" required>
+        
+        <label for="idade">Qual é a sua idade?</label>
+        <input type="number" id="idade" name="idade" min="0" required>
+        
+        <button type="submit">Enviar</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        document.getElementById('filmeForm').onsubmit = function(event) {
+            event.preventDefault(); // Previne o envio do formulário
+
+            const opcao = document.getElementById('opcao').value;
+            const idade = parseInt(document.getElementById('idade').value);
+            let resultado = '';
+
+            // Estrutura de verificação com base na opção e idade
+            switch(opcao) {
+                case '1':
+                    resultado = idade >= 18 ? 
+                        "Você pode assistir a Deadpool. Aproveite o filme!" : 
+                        "Desculpe, você não pode assistir a Deadpool porque sua idade é menor que 18 anos.";
+                    break;
+                case '2':
+                    resultado = "Você pode assistir a Toy Story. Aproveite o filme!";
+                    break;
+                case '3':
+                    resultado = idade >= 12 ? 
+                        "Você pode assistir a Os Vingadores. Aproveite o filme!" : 
+                        "Desculpe, você não pode assistir a Os Vingadores porque sua idade é menor que 12 anos.";
+                    break;
+                case '4':
+                    resultado = "Você pode assistir a A Bela e a Fera. Aproveite o filme!";
+                    break;
+                default:
+                    resultado = "Opção inválida. Por favor, escolha um número da lista.";
+            }
+
+            // Adiciona a mensagem da cliente e da atendente ao chat
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<div class="message cliente">Você escolheu o filme ${opcao} e tem ${idade} anos.</div>`;
+            chat.innerHTML += `<div class="message atendente">${resultado}</div>`;
+
+            // Limpa os campos do formulário
+            document.getElementById('filmeForm').reset();
+        };
+    </script>
+</body>
+</html>
